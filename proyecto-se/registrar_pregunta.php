@@ -26,13 +26,13 @@ include "php/pregunta.php";
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Título</label>
-                                            <input name="pre_titulo" type="text"class="form-control">
+                                            <input name="pre_titulo" type="text"class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Imagen (URL)</label>
-                                            <input name="pre_imagen" type="text"class="form-control">
+                                            <input name="pre_imagen" type="text"class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
@@ -40,13 +40,13 @@ include "php/pregunta.php";
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Descripción</label>
-                                            <textarea name="pre_descripcion" class="form-control"></textarea>
+                                            <textarea name="pre_descripcion" class="form-control" required></textarea>
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>Puntaje</label>
-                                            <input name="pre_puntaje" type="text"class="form-control">
+                                            <input name="pre_puntaje" type="text"class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
@@ -194,7 +194,7 @@ include "php/plantilla/footer.php";
             '<td>'+id_opcion+'<input type="hidden" name="txt_opcion[]" value="'+id_opcion+'"></td>'+
             '<td>'+opc_titulo+'<input type="hidden" name="opc_titulo[]" value="'+opc_titulo+'"></td>'+
             '<td>'+opc_descripcion+'<input type="hidden" name="opc_descripcion[]" value="'+opc_descripcion+'"></td>'+
-            '<td><input type="text" name="txt_puntaje[]" ></td>'+
+            '<td><input type="text" name="txt_puntaje[]" required></td>'+
             '<td><button type="button" class="btn btn-danger btn_remove">Eliminar</button></td>'+
             '</tr>';
 

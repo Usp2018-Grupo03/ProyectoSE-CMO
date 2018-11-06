@@ -67,7 +67,7 @@ include "php/opcion.php";
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Título</label>
-                                            <input name="opc_titulo" type="text"class="form-control">
+                                            <input name="opc_titulo" type="text"class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
@@ -75,7 +75,7 @@ include "php/opcion.php";
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Descripción</label>
-                                            <textarea name="opc_descripcion" class="form-control"></textarea>
+                                            <textarea name="opc_descripcion" class="form-control" required></textarea>
                                         </div>
                                     </div>
                                 </div>

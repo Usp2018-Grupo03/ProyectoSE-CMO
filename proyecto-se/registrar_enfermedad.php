@@ -26,7 +26,7 @@ include "php/enfermedad.php";
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input name="enf_nombre" type="text"class="form-control">
+                                            <input name="enf_nombre" type="text"class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
@@ -34,7 +34,7 @@ include "php/enfermedad.php";
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Descripción</label>
-                                            <textarea name="enf_descripcion" class="form-control"></textarea>
+                                            <textarea name="enf_descripcion" class="form-control" required></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -179,8 +179,8 @@ include "php/plantilla/footer.php";
             '<td>'+id_sintoma+'<input type="hidden" name="txt_sintoma[]" value="'+id_sintoma+'"></td>'+
             '<td>'+sin_nombre+'<input type="hidden" name="sin_nombre[]" value="'+sin_nombre+'"></td>'+
             '<td>'+sin_descripcion+'<input type="hidden" name="sin_descripcion[]" value="'+sin_descripcion+'"></td>'+
-            '<td><input type="text" name="txt_grado[]" ></td>'+
-            '<td><input type="text" name="txt_observacion[]" ></td>'+
+            '<td><input type="text" name="txt_grado[]" required></td>'+
+            '<td><input type="text" name="txt_observacion[]" required></td>'+
             '<td><button type="button" class="btn btn-danger btn_remove">Eliminar</button></td>'+
             '</tr>';
 

@@ -67,7 +67,7 @@ include "php/sintoma.php";
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Nombre</label>
-                                            <input name="sin_nombre" type="text"class="form-control">
+                                            <input name="sin_nombre" type="text"class="form-control" required>
                                         </div>
                                     </div>
                                 </div>
@@ -75,7 +75,7 @@ include "php/sintoma.php";
                                     <div class="col-sm-6">
                                         <div class="form-group">
                                             <label>Descripción</label>
-                                            <textarea name="sin_descripcion" class="form-control"></textarea>
+                                            <textarea name="sin_descripcion" class="form-control" required></textarea>
                                         </div>
                                     </div>
                                 </div>
