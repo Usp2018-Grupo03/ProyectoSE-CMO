@@ -3,8 +3,8 @@ Instrucciones
 2. Dentro del XAMPP activamos los servidios del Apache y MySQL
 3. Crear una nueva base de datos en servidor del mysql con el mismo nombre del scrip a importar 
 4. Importamos el script seleccionando la ubicacion en donde se encuentra
-5. Pegar archivos a la carpeta htdocs comunmente con la siguiente ubicación C:\xampp\htdocs
-6. Abrir el navegador y pegar la siguiente dirección http://localhost/proyecto-se
+5. Pegar archivos a la carpeta htdocs comunmente con la siguiente ubicaciÃ³n C:\xampp\htdocs
+6. Abrir el navegador y pegar la siguiente direcciÃ³n http://localhost/proyecto-se
 
 
-7. DIRECCION PARA ACCEDER http://18.222.44.158/proyecto-se
+7. DIRECCIÃ“N PARA ACCEDER AL SERVIDOR EN LA NUBE http://18.222.44.158/proyecto-se
