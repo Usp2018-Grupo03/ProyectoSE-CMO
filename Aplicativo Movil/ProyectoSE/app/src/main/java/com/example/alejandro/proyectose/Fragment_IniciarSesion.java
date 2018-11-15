@@ -1,108 +1,121 @@
 package com.example.alejandro.proyectose;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Fragment_IniciarSesion.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Fragment_IniciarSesion#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment_IniciarSesion extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import java.util.HashMap;
+import java.util.Map;
 
-    private OnFragmentInteractionListener mListener;
+public class Fragment_IniciarSesion extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    public Fragment_IniciarSesion() {
-        // Required empty public constructor
-    }
+    RequestQueue rq;
+    RequestQueue requestQueue;
+    JsonRequest jrq;
+    EditText cajaUser, cajaPwd;
+    Button btnConsultar;
+    Button btnRegistrar;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_IniciarSesion.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_IniciarSesion newInstance(String param1, String param2) {
-        Fragment_IniciarSesion fragment = new Fragment_IniciarSesion();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    Global g = new Global();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment__iniciar_sesion, container, false);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        View vista = inflater.inflate(R.layout.fragment_fragment__iniciar_sesion, container, false);
+
+        cajaUser = (EditText) vista.findViewById(R.id.txtUser);
+        cajaPwd = (EditText) vista.findViewById(R.id.txtPwd);
+        btnConsultar = (Button) vista.findViewById(R.id.btnSesion);
+        btnRegistrar = (Button) vista.findViewById(R.id.btnregistrar);
+
+        rq = Volley.newRequestQueue(getContext());
+        requestQueue = Volley.newRequestQueue(getContext());
+
+        btnConsultar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                iniciarSesion();
+            }
+        });
+
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                registrarUsuario();
+            }
+        });
+
+        return vista;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onErrorResponse(VolleyError error) {
+
+        Toast.makeText(getContext(), "Usuario no encontrado. " +error.toString()+ cajaUser.getText().toString(), Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onResponse(JSONObject response) {
+
+        ClassUsuario usuario = new ClassUsuario();
+        JSONArray jsonArray = response.optJSONArray("datos");
+        JSONObject jsonObject = null;
+
+        try {
+
+            jsonObject = jsonArray.getJSONObject(0);
+
+            usuario.setUsuario(jsonObject.optString("usu_usuario"));
+            usuario.setPassword(jsonObject.optString("usu_password"));
+            usuario.setNombres(jsonObject.optString("usu_nombres"));
+            usuario.setApellidos(jsonObject.optString("usu_apellidos"));
+        } catch (JSONException e) {
+
+            e.printStackTrace();
+        }
+
+        Intent intencion = new Intent(getContext(), ActivityMenu.class);
+        intencion.putExtra("nombre", usuario.getNombres() + " " + usuario.getApellidos());
+        startActivity(intencion);
+
+        Toast.makeText(getContext(), "Bienvenido " + usuario.getNombres() + " " + usuario.getApellidos(), Toast.LENGTH_SHORT).show();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    private void iniciarSesion(){
+
+        String url = "http://"+ g.DIRECCION +"/proyectose-php/login.php?user="+cajaUser.getText().toString()+ "&pwd=" + cajaPwd.getText().toString() + "";
+        jrq = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        rq.add(jrq);
+    }
+
+    private void registrarUsuario(){
+        Fragment_RegistrarSesion fr=new Fragment_RegistrarSesion();
+
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.escenarioregistrar,fr)
+                .addToBackStack(null)
+                .commit();
     }
 }

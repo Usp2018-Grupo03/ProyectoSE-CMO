@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/frameLayout"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context=".Fragment_RegistrarSesion"
-android:background="@android:color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/escenarioregistrar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".Fragment_RegistrarSesion">
 
-<!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Update blank fragment layout -->
 
 
     <TextView
@@ -31,7 +31,7 @@ android:background="@android:color/white">
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="172dp"
-        android:layout_height="110dp"
+        android:layout_height="65dp"
         android:layout_below="@+id/txtmensajego2"
         android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/usuregistrar" />
@@ -72,7 +72,6 @@ android:background="@android:color/white">
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="13dp"
         app:cardBackgroundColor="@android:color/holo_orange_light"
         app:cardCornerRadius="25dp"
         app:cardElevation="10dp">
@@ -85,9 +84,9 @@ android:background="@android:color/white">
                 android:id="@+id/btnSesion"
                 android:layout_width="296dp"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="4dp"
+                android:layout_marginBottom="0dp"
                 android:background="@android:color/transparent"
                 android:text="Iniciar Sesion"
                 android:textAllCaps="false"
@@ -102,9 +101,8 @@ android:background="@android:color/white">
         android:id="@+id/txtnombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/txtapellido"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="190dp"
         android:ems="10"
         android:hint="Escriba su nombre"
         android:inputType="textPersonName"
@@ -114,8 +112,8 @@ android:background="@android:color/white">
         android:id="@+id/txtapellido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/txtusu"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/txtnombre"
         android:ems="10"
         android:hint="Escriba sus apellidos"
         android:inputType="textPersonName"
@@ -125,8 +123,8 @@ android:background="@android:color/white">
         android:id="@+id/txtusu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/txtcontra"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/txtapellido"
         android:ems="10"
         android:hint="Escriba su usuario"
         android:inputType="textPersonName"
@@ -147,9 +145,8 @@ android:background="@android:color/white">
         android:id="@+id/txtdirec"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/cardView2"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="150dp"
         android:ems="10"
         android:hint="Escriba su direccion"
         android:inputType="textPersonName"

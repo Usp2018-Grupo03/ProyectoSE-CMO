@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.2
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 31-10-2018 a las 08:04:48
--- Versión del servidor: 5.6.41
--- Versión de PHP: 7.0.31
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 15-11-2018 a las 06:29:11
+-- Versión del servidor: 10.1.34-MariaDB
+-- Versión de PHP: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -48,6 +48,13 @@ CREATE TABLE `detallepreopc` (
   `id_pregunta` int(11) NOT NULL,
   `id_opcion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `detallepreopc`
+--
+
+INSERT INTO `detallepreopc` (`id_detallepreopc`, `dpo_puntaje`, `id_pregunta`, `id_opcion`) VALUES
+(1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -100,6 +107,13 @@ CREATE TABLE `pregunta` (
   `pre_puntaje` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Volcado de datos para la tabla `pregunta`
+--
+
+INSERT INTO `pregunta` (`id_pregunta`, `pre_titulo`, `pre_descripcion`, `pre_imagen`, `pre_fecha`, `pre_estado`, `pre_puntaje`) VALUES
+(1, 'AA', 'AA', 'AA', '2018-11-06', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -119,10 +133,8 @@ CREATE TABLE `sintoma` (
 --
 
 INSERT INTO `sintoma` (`id_sintoma`, `sin_nombre`, `sin_descripcion`, `sin_fecha`, `sin_estado`) VALUES
-(3, 'SINTOMA1', 'Desc.', '2018-10-31', 1),
 (7, '2', '2', '2018-10-31', 1),
-(8, '3', '3', '2018-10-31', 1),
-(9, '4', '4', '2018-10-31', 1);
+(8, '3', '3', '2018-10-31', 1);
 
 -- --------------------------------------------------------
 
@@ -146,7 +158,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `usu_nombres`, `usu_apellidos`, `usu_rol`, `usu_usuario`, `usu_password`, `usu_fecha`, `usu_estado`) VALUES
-(1, 'AAA', 'aaa', 'Administrador', 'Rafael', '123', '2018-01-01', 1);
+(1, 'AAA', 'aaa', 'Administrador', 'admin', '123', '2018-01-01', 1);
 
 --
 -- Índices para tablas volcadas
@@ -213,7 +225,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `detalleenfsin`
 --
 ALTER TABLE `detalleenfsin`
-  MODIFY `id_detalleenfsin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_detalleenfsin` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `detallepreopc`
@@ -225,25 +237,25 @@ ALTER TABLE `detallepreopc`
 -- AUTO_INCREMENT de la tabla `enfermedad`
 --
 ALTER TABLE `enfermedad`
-  MODIFY `id_enfermedad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_enfermedad` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `opcion`
 --
 ALTER TABLE `opcion`
-  MODIFY `id_opcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_opcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `sintoma`
 --
 ALTER TABLE `sintoma`
-  MODIFY `id_sintoma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_sintoma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

@@ -22,9 +22,7 @@ public class ActivityMenu extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.escenariomenu);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -33,13 +31,15 @@ public class ActivityMenu extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.contenedor,new HistorialFragment()).commit();
+        /* FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.contenedor,new Fragment_IniciarSesion()).commit(); */
+
+        String usuario=getIntent().getStringExtra("nombre");
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.escenariomenu);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -53,8 +53,6 @@ public class ActivityMenu extends AppCompatActivity
         getMenuInflater().inflate(R.menu.activity_menu, menu);
         return true;
     }
-
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -70,7 +68,7 @@ public class ActivityMenu extends AppCompatActivity
             fragmentManager.beginTransaction().replace(R.id.contenedor,new DiagnosticoFragment()).commit();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.escenariomenu);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
