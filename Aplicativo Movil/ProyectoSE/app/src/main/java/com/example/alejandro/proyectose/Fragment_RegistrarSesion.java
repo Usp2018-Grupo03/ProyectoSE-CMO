@@ -1,108 +1,101 @@
 package com.example.alejandro.proyectose;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Fragment_RegistrarSesion.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Fragment_RegistrarSesion#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Fragment_RegistrarSesion extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import org.json.JSONObject;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class Fragment_RegistrarSesion extends Fragment implements Response.Listener<JSONObject>, Response.ErrorListener {
 
-    private OnFragmentInteractionListener mListener;
+    RequestQueue rq;
+    JsonRequest jrq;
+    EditText txtNombres, txtApellidos, txtUsuario, txtPasswd, txtCorreo, txtDireccion;
+    Button btnRegistrar;
 
-    public Fragment_RegistrarSesion() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment_RegistrarSesion.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Fragment_RegistrarSesion newInstance(String param1, String param2) {
-        Fragment_RegistrarSesion fragment = new Fragment_RegistrarSesion();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    Global g = new Global();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragment__registrar_sesion, container, false);
-    }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        View vista = inflater.inflate(R.layout.fragment_fragment__registrar_sesion, container, false);
+
+        txtNombres = (EditText) vista.findViewById(R.id.txtnombre);
+        txtApellidos = (EditText) vista.findViewById(R.id.txtapellido);
+        txtUsuario = (EditText) vista.findViewById(R.id.txtusu);
+        txtPasswd = (EditText) vista.findViewById(R.id.txtcontra);
+        txtCorreo = (EditText) vista.findViewById(R.id.txtcorreo);
+        txtDireccion = (EditText) vista.findViewById(R.id.txtdirec);
+
+        btnRegistrar = (Button) vista.findViewById(R.id.BtnRegistrar);
+        rq = Volley.newRequestQueue(getContext());
+
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registrar_usuario();
+            }
+        });
+
+        return vista;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onErrorResponse(VolleyError error) {
+
+        Toast.makeText(getContext(), "Error al registrar los datos: " + error.toString()
+                , Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void onResponse(JSONObject response) {
+
+        Toast.makeText(getContext(), "Usuario registrado correctamente."
+                , Toast.LENGTH_SHORT).show();
+        limpiar();
+
+        Intent intencion = new Intent(getContext(), MainActivity.class);
+        startActivity(intencion);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    void limpiar() {
+
+        txtNombres.setText("");
+        txtApellidos.setText("");
+        txtUsuario.setText("");
+        txtPasswd.setText("");
+        txtCorreo.setText("");
+        txtDireccion.setText("");
+    }
+
+    void registrar_usuario(){
+
+        String url = "http://"+ g.DIRECCION +"/proyectose-php/reg_usuario.php" +
+                "?nombres="+ txtNombres.getText().toString() +"" +
+                "&apellidos="+ txtApellidos.getText().toString() +"" +
+                "&usuario="+ txtUsuario.getText().toString() +"" +
+                "&passwd="+ txtPasswd.getText().toString() +"" +
+                "&correo="+ txtCorreo.getText().toString() +"" +
+                "&direccion="+ txtDireccion.getText().toString() +"";
+
+        jrq = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
+        rq.add(jrq);
     }
 }

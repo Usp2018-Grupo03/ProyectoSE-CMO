@@ -114,7 +114,7 @@ public class Fragment_IniciarSesion extends Fragment implements Response.Listene
         Fragment_RegistrarSesion fr=new Fragment_RegistrarSesion();
 
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.escenarioregistrar,fr)
+                .replace(R.id.escenarioiniciar,fr)
                 .addToBackStack(null)
                 .commit();
     }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2018 a las 06:29:11
+-- Tiempo de generación: 15-11-2018 a las 08:15:05
 -- Versión del servidor: 10.1.34-MariaDB
 -- Versión de PHP: 7.2.7
 
@@ -149,6 +149,8 @@ CREATE TABLE `usuario` (
   `usu_rol` varchar(50) CHARACTER SET utf8 NOT NULL,
   `usu_usuario` varchar(50) CHARACTER SET utf8 NOT NULL,
   `usu_password` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `usu_correo` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `usu_direccion` varchar(200) CHARACTER SET utf8 NOT NULL,
   `usu_fecha` date NOT NULL,
   `usu_estado` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -157,8 +159,8 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `usu_nombres`, `usu_apellidos`, `usu_rol`, `usu_usuario`, `usu_password`, `usu_fecha`, `usu_estado`) VALUES
-(1, 'AAA', 'aaa', 'Administrador', 'admin', '123', '2018-01-01', 1);
+INSERT INTO `usuario` (`id_usuario`, `usu_nombres`, `usu_apellidos`, `usu_rol`, `usu_usuario`, `usu_password`, `usu_correo`, `usu_direccion`, `usu_fecha`, `usu_estado`) VALUES
+(1, 'Alejandro', 'Quijandria', 'Administrador', 'admin', '123', 'admin@gmail,com', 'Calle 123', '2018-01-01', 1);
 
 --
 -- Índices para tablas volcadas
@@ -261,7 +263,7 @@ ALTER TABLE `sintoma`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
