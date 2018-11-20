@@ -95,6 +95,8 @@
 						<li><a href="registrar_enfermedad.php">Registrar Enfermedad</a></li>
                         <li><a href="registrar_opcion.php">Registrar Opcion</a></li>
 						<li><a href="registrar_pregunta.php">Registrar Pregunta</a></li>
+						<li><a href="registrar_evaluacion.php">Registrar Evaluación</a></li>
+
 
 					</ul>
 				</li>

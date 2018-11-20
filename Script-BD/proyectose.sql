@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-11-2018 a las 08:15:05
+-- Tiempo de generación: 19-11-2018 a las 04:20:03
 -- Versión del servidor: 10.1.34-MariaDB
 -- Versión de PHP: 7.2.7
 
@@ -54,7 +54,19 @@ CREATE TABLE `detallepreopc` (
 --
 
 INSERT INTO `detallepreopc` (`id_detallepreopc`, `dpo_puntaje`, `id_pregunta`, `id_opcion`) VALUES
-(1, 1, 1, 1);
+(2, 10, 2, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `detallesinpre`
+--
+
+CREATE TABLE `detallesinpre` (
+  `id_detallesinpre` int(11) NOT NULL,
+  `id_sintoma` int(11) NOT NULL,
+  `id_pregunta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -89,7 +101,7 @@ CREATE TABLE `opcion` (
 --
 
 INSERT INTO `opcion` (`id_opcion`, `opc_titulo`, `opc_descripcion`, `opc_fecha`, `opc_estado`) VALUES
-(1, 'AAA', 'aaa', '2018-10-31', 1);
+(1, 'AA', 'aa', '2018-11-18', 1);
 
 -- --------------------------------------------------------
 
@@ -112,7 +124,7 @@ CREATE TABLE `pregunta` (
 --
 
 INSERT INTO `pregunta` (`id_pregunta`, `pre_titulo`, `pre_descripcion`, `pre_imagen`, `pre_fecha`, `pre_estado`, `pre_puntaje`) VALUES
-(1, 'AA', 'AA', 'AA', '2018-11-06', 1, 1);
+(2, 'PREGUNTA 1', 'Desc.', 'AAA', '2018-11-18', 1, 10);
 
 -- --------------------------------------------------------
 
@@ -133,8 +145,7 @@ CREATE TABLE `sintoma` (
 --
 
 INSERT INTO `sintoma` (`id_sintoma`, `sin_nombre`, `sin_descripcion`, `sin_fecha`, `sin_estado`) VALUES
-(7, '2', '2', '2018-10-31', 1),
-(8, '3', '3', '2018-10-31', 1);
+(1, 'SINTOMA 1', 'Desc.', '2018-11-18', 1);
 
 -- --------------------------------------------------------
 
@@ -149,8 +160,6 @@ CREATE TABLE `usuario` (
   `usu_rol` varchar(50) CHARACTER SET utf8 NOT NULL,
   `usu_usuario` varchar(50) CHARACTER SET utf8 NOT NULL,
   `usu_password` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `usu_correo` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `usu_direccion` varchar(200) CHARACTER SET utf8 NOT NULL,
   `usu_fecha` date NOT NULL,
   `usu_estado` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -159,8 +168,8 @@ CREATE TABLE `usuario` (
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `usu_nombres`, `usu_apellidos`, `usu_rol`, `usu_usuario`, `usu_password`, `usu_correo`, `usu_direccion`, `usu_fecha`, `usu_estado`) VALUES
-(1, 'Alejandro', 'Quijandria', 'Administrador', 'admin', '123', 'admin@gmail,com', 'Calle 123', '2018-01-01', 1);
+INSERT INTO `usuario` (`id_usuario`, `usu_nombres`, `usu_apellidos`, `usu_rol`, `usu_usuario`, `usu_password`, `usu_fecha`, `usu_estado`) VALUES
+(1, 'Alejandro', 'Quijandria', 'Administrador', 'admin', '123', '2018-01-01', 1);
 
 --
 -- Índices para tablas volcadas
@@ -183,6 +192,15 @@ ALTER TABLE `detallepreopc`
   ADD KEY `ix_tmp_autoinc` (`id_detallepreopc`),
   ADD KEY `fk_detallepreopc_opcion` (`id_opcion`),
   ADD KEY `fk_detallepreopc_pregunta` (`id_pregunta`);
+
+--
+-- Indices de la tabla `detallesinpre`
+--
+ALTER TABLE `detallesinpre`
+  ADD PRIMARY KEY (`id_detallesinpre`),
+  ADD KEY `ix_tmp_autoinc` (`id_detallesinpre`),
+  ADD KEY `fk_detallesinpre_pregunta` (`id_pregunta`),
+  ADD KEY `fk_detallesinpre_sintoma` (`id_sintoma`);
 
 --
 -- Indices de la tabla `enfermedad`
@@ -233,7 +251,13 @@ ALTER TABLE `detalleenfsin`
 -- AUTO_INCREMENT de la tabla `detallepreopc`
 --
 ALTER TABLE `detallepreopc`
-  MODIFY `id_detallepreopc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_detallepreopc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `detallesinpre`
+--
+ALTER TABLE `detallesinpre`
+  MODIFY `id_detallesinpre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `enfermedad`
@@ -251,19 +275,19 @@ ALTER TABLE `opcion`
 -- AUTO_INCREMENT de la tabla `pregunta`
 --
 ALTER TABLE `pregunta`
-  MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `sintoma`
 --
 ALTER TABLE `sintoma`
-  MODIFY `id_sintoma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_sintoma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -282,6 +306,13 @@ ALTER TABLE `detalleenfsin`
 ALTER TABLE `detallepreopc`
   ADD CONSTRAINT `fk_detallepreopc_opcion` FOREIGN KEY (`id_opcion`) REFERENCES `opcion` (`id_opcion`),
   ADD CONSTRAINT `fk_detallepreopc_pregunta` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id_pregunta`);
+
+--
+-- Filtros para la tabla `detallesinpre`
+--
+ALTER TABLE `detallesinpre`
+  ADD CONSTRAINT `fk_detallesinpre_pregunta` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id_pregunta`),
+  ADD CONSTRAINT `fk_detallesinpre_sintoma` FOREIGN KEY (`id_sintoma`) REFERENCES `sintoma` (`id_sintoma`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
