@@ -16,5 +16,6 @@ Instrucciones para Abrir el Aplicativo Movil
 . Abrir el aplicativo movil en android studio
 . Copiar las consultas en php en la carpeta publica htdocs
 . Cambiar la direccion global de con la direccion IPV4 de su maquina.
+---PRUEBA CONFIGURACION
 
 
