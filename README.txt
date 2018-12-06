@@ -9,7 +9,7 @@ Instrucciones para Abrir la Aplicacion Web
 . Pegar archivos a la carpeta htdocs comunmente con la siguiente ubicación C:\xampp\htdocs
 . Abrir el navegador y pegar la siguiente dirección http://localhost/proyecto-se
 
-IMPORTANTE DIRECCIÓN PARA ACCEDER AL SERVIDOR EN LA NUBE http://18.224.150.2/proyecto-se
+IMPORTANTE DIRECCIÓN PARA ACCEDER AL SERVIDOR EN LA NUBE http://18.188.53.190/proyecto-se
 
 Instrucciones para Abrir el Aplicativo Movil
 
