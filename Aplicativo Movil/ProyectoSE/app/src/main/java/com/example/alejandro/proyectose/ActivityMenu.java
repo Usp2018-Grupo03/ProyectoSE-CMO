@@ -1,6 +1,7 @@
 package com.example.alejandro.proyectose;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -13,6 +14,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -31,17 +35,14 @@ import java.util.ArrayList;
 public class ActivityMenu extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    ArrayList<ClassPregunta> alistPREGUNTA;
-    PreguntaAdaptador mADAPTADORPREGUNTA;
-    RecyclerView rvLISTARPREGUNTA;
-    RequestQueue mREQUESTQUEUELISTAR;
-
-    Global g = new Global();
+    Button BTNDIAG;
+    TextView TXTNAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -54,63 +55,21 @@ public class ActivityMenu extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /* FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.contenedor,new Fragment_IniciarSesion()).commit(); */
+        BTNDIAG = (Button) findViewById(R.id.btningrediag);
+        TXTNAME = (TextView) findViewById(R.id.txtUsuario);
 
-        String usuario=getIntent().getStringExtra("nombre");
 
-        alistPREGUNTA = new ArrayList<ClassPregunta>();
-        rvLISTARPREGUNTA = (RecyclerView) findViewById(R.id.rvListarPregunta);
-        rvLISTARPREGUNTA.setHasFixedSize(true);
-        rvLISTARPREGUNTA.setLayoutManager(new LinearLayoutManager(this));
-        mREQUESTQUEUELISTAR = Volley.newRequestQueue(this);
 
-        LlenarRecycler();
-    }
-
-    private void LlenarRecycler(){
-
-        String URL = "http://"+ g.DIRECCION +"/proyectose-php/listarpregunta.php";
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("pregunta");
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject pregunta = jsonArray.getJSONObject(i);
-
-                                String id_pregunta = pregunta.getString("id_pregunta");
-                                String pre_titulo = pregunta.getString("pre_titulo");
-                                String pre_descripcion = pregunta.getString("pre_descripcion");
-                                String pre_imagen = pregunta.getString("pre_imagen");
-                                String pre_fecha = pregunta.getString("pre_fecha");
-                                String pre_estado = pregunta.getString("pre_estado");
-                                String pre_puntaje = pregunta.getString("pre_puntaje");
-
-                                alistPREGUNTA.add(new ClassPregunta(id_pregunta, pre_titulo, pre_descripcion, pre_imagen, pre_fecha, pre_estado, pre_puntaje));
-
-                            }
-
-                            mADAPTADORPREGUNTA = new PreguntaAdaptador(ActivityMenu.this, alistPREGUNTA);
-                            rvLISTARPREGUNTA.setAdapter(mADAPTADORPREGUNTA);
-
-                            Toast.makeText(getApplicationContext(), "Lista de Preguntas.", Toast.LENGTH_LONG).show();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
+        BTNDIAG.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+            public void onClick(View v) {
+
+                Intent intencion = new Intent(getApplicationContext(), DiagnosticoActivity.class);
+                startActivity(intencion);
+
+                Toast.makeText(getApplicationContext(), "Iniciando Diagnostico", Toast.LENGTH_SHORT).show();
             }
         });
-
-        mREQUESTQUEUELISTAR.add(request);
     }
 
     @Override
@@ -127,6 +86,7 @@ public class ActivityMenu extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.activity_menu, menu);
+
         return true;
     }
 
@@ -134,6 +94,7 @@ public class ActivityMenu extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+
         int id = item.getItemId();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -141,11 +102,16 @@ public class ActivityMenu extends AppCompatActivity
         if (id == R.id.nav_camera) {
             fragmentManager.beginTransaction().replace(R.id.contenedor,new HistorialFragment()).commit();
         } else if (id == R.id.nav_gallery) {
-            fragmentManager.beginTransaction().replace(R.id.contenedor,new DiagnosticoFragment()).commit();
+
+            Intent intencion = new Intent(getApplicationContext(), DiagnosticoActivity.class);
+            startActivity(intencion);
+
+            Toast.makeText(getApplicationContext(), "Iniciando Diagnostico", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.escenariomenu);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 }

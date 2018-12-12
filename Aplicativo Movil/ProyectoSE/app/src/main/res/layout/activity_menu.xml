@@ -9,11 +9,6 @@
     tools:openDrawer="start"
     android:theme="@style/AppTheme">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvListarPregunta"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <include
         layout="@layout/app_bar_activity_menu"
         android:layout_width="match_parent"

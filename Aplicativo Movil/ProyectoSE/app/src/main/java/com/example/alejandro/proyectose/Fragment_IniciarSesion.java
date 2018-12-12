@@ -97,7 +97,8 @@ public class Fragment_IniciarSesion extends Fragment implements Response.Listene
         }
 
         Intent intencion = new Intent(getContext(), ActivityMenu.class);
-        intencion.putExtra("nombre", usuario.getNombres() + " " + usuario.getApellidos());
+        String nom = usuario.getNombres() + " " + usuario.getApellidos();
+        intencion.putExtra("nombre", nom);
         startActivity(intencion);
 
         Toast.makeText(getContext(), "Bienvenido " + usuario.getNombres() + " " + usuario.getApellidos(), Toast.LENGTH_SHORT).show();

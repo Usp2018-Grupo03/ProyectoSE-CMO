@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-11-2018 a las 02:29:19
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.2.11
+-- Tiempo de generación: 07-12-2018 a las 04:37:17
+-- Versión del servidor: 10.1.37-MariaDB
+-- Versión de PHP: 7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -73,34 +73,35 @@ CREATE TABLE `detallepreopc` (
 --
 
 INSERT INTO `detallepreopc` (`id_detallepreopc`, `dpo_puntaje`, `id_pregunta`, `id_opcion`) VALUES
-(3, 10, 3, 1),
+(3, 100, 3, 1),
 (4, 0, 3, 4),
-(5, 10, 4, 1),
+(5, 100, 4, 1),
 (6, 0, 4, 4),
-(7, 10, 5, 1),
+(7, 100, 5, 1),
 (8, 0, 5, 4),
-(9, 10, 6, 1),
+(9, 100, 6, 1),
 (10, 0, 6, 4),
-(11, 10, 7, 1),
+(11, 100, 7, 1),
 (12, 0, 7, 4),
-(13, 10, 8, 1),
+(13, 100, 8, 1),
 (14, 0, 8, 4),
-(15, 10, 9, 1),
+(15, 100, 9, 1),
 (16, 0, 9, 4),
-(17, 10, 10, 1),
+(17, 100, 10, 1),
 (18, 0, 10, 4),
-(19, 10, 11, 1),
+(19, 100, 11, 1),
 (20, 0, 11, 4),
-(21, 10, 12, 1),
+(21, 100, 12, 1),
 (22, 0, 12, 4),
-(23, 10, 13, 1),
+(23, 100, 13, 1),
 (24, 0, 13, 4),
-(25, 10, 14, 1),
+(25, 100, 14, 1),
 (26, 0, 14, 4),
-(27, 10, 15, 1),
+(27, 100, 15, 1),
 (28, 0, 15, 4),
-(29, 10, 16, 1),
-(30, 0, 16, 4);
+(29, 100, 16, 1),
+(30, 0, 16, 4),
+(31, 50, 3, 5);
 
 -- --------------------------------------------------------
 
@@ -112,6 +113,29 @@ CREATE TABLE `detallesinpre` (
   `id_detallesinpre` int(11) NOT NULL,
   `id_sintoma` int(11) NOT NULL,
   `id_pregunta` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `detallesinpre`
+--
+
+INSERT INTO `detallesinpre` (`id_detallesinpre`, `id_sintoma`, `id_pregunta`) VALUES
+(1, 1, 3),
+(2, 1, 4),
+(3, 1, 5),
+(4, 1, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `diagnostico`
+--
+
+CREATE TABLE `diagnostico` (
+  `id_diagnostico` int(11) NOT NULL,
+  `dia_porcentaje` double NOT NULL,
+  `dia_enfermedad` varchar(50) NOT NULL,
+  `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -157,7 +181,8 @@ CREATE TABLE `opcion` (
 
 INSERT INTO `opcion` (`id_opcion`, `opc_titulo`, `opc_descripcion`, `opc_fecha`, `opc_estado`) VALUES
 (1, 'SI', 'afirmaciÃ³n', '2018-11-18', 1),
-(4, 'NO', 'negaciÃ³n', '2018-11-22', 1);
+(4, 'NO', 'negaciÃ³n', '2018-11-22', 1),
+(5, 'MEDIO', 'Desc.', '2018-12-06', 1);
 
 -- --------------------------------------------------------
 
@@ -198,6 +223,18 @@ INSERT INTO `pregunta` (`id_pregunta`, `pre_titulo`, `pre_descripcion`, `pre_ima
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `puntaje`
+--
+
+CREATE TABLE `puntaje` (
+  `id_puntaje` int(11) NOT NULL,
+  `pun_enfermedad` varchar(50) NOT NULL,
+  `pun_valor` double NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `sintoma`
 --
 
@@ -224,6 +261,18 @@ INSERT INTO `sintoma` (`id_sintoma`, `sin_nombre`, `sin_descripcion`, `sin_fecha
 (8, 'SENSACIÃ“N DE PEGADO DE PARPADOS', 'se debe a la secreciÃ³n del ojo', '2018-11-22', 1),
 (9, 'PICAZÃ“N, IRRITACIÃ“N O ARDOR EN LOS OJOS.', 'sensacion producida a causa de diferentes factores', '2018-11-22', 1),
 (10, 'FROTARSE LOS OJOS CON FRECUENCIA', 'sensaciÃ³n de limpiar al hacer esta acciÃ³n', '2018-11-22', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `temporal`
+--
+
+CREATE TABLE `temporal` (
+  `id_temporal` int(11) NOT NULL,
+  `id_pregunta` int(11) NOT NULL,
+  `dpo_puntaje` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -281,11 +330,17 @@ ALTER TABLE `detallesinpre`
   ADD KEY `fk_detallesinpre_sintoma` (`id_sintoma`);
 
 --
+-- Indices de la tabla `diagnostico`
+--
+ALTER TABLE `diagnostico`
+  ADD PRIMARY KEY (`id_diagnostico`),
+  ADD KEY `id_usuario` (`id_usuario`);
+
+--
 -- Indices de la tabla `enfermedad`
 --
 ALTER TABLE `enfermedad`
-  ADD PRIMARY KEY (`id_enfermedad`),
-  ADD KEY `ix_tmp_autoinc` (`id_enfermedad`);
+  ADD PRIMARY KEY (`id_enfermedad`);
 
 --
 -- Indices de la tabla `opcion`
@@ -302,11 +357,23 @@ ALTER TABLE `pregunta`
   ADD KEY `ix_tmp_autoinc` (`id_pregunta`);
 
 --
+-- Indices de la tabla `puntaje`
+--
+ALTER TABLE `puntaje`
+  ADD PRIMARY KEY (`id_puntaje`);
+
+--
 -- Indices de la tabla `sintoma`
 --
 ALTER TABLE `sintoma`
   ADD PRIMARY KEY (`id_sintoma`),
   ADD KEY `ix_tmp_autoinc` (`id_sintoma`);
+
+--
+-- Indices de la tabla `temporal`
+--
+ALTER TABLE `temporal`
+  ADD PRIMARY KEY (`id_temporal`);
 
 --
 -- Indices de la tabla `usuario`
@@ -329,13 +396,19 @@ ALTER TABLE `detalleenfsin`
 -- AUTO_INCREMENT de la tabla `detallepreopc`
 --
 ALTER TABLE `detallepreopc`
-  MODIFY `id_detallepreopc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id_detallepreopc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT de la tabla `detallesinpre`
 --
 ALTER TABLE `detallesinpre`
-  MODIFY `id_detallesinpre` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detallesinpre` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `diagnostico`
+--
+ALTER TABLE `diagnostico`
+  MODIFY `id_diagnostico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
 
 --
 -- AUTO_INCREMENT de la tabla `enfermedad`
@@ -347,7 +420,7 @@ ALTER TABLE `enfermedad`
 -- AUTO_INCREMENT de la tabla `opcion`
 --
 ALTER TABLE `opcion`
-  MODIFY `id_opcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_opcion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `pregunta`
@@ -356,10 +429,22 @@ ALTER TABLE `pregunta`
   MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
+-- AUTO_INCREMENT de la tabla `puntaje`
+--
+ALTER TABLE `puntaje`
+  MODIFY `id_puntaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+
+--
 -- AUTO_INCREMENT de la tabla `sintoma`
 --
 ALTER TABLE `sintoma`
   MODIFY `id_sintoma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de la tabla `temporal`
+--
+ALTER TABLE `temporal`
+  MODIFY `id_temporal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -391,6 +476,12 @@ ALTER TABLE `detallepreopc`
 ALTER TABLE `detallesinpre`
   ADD CONSTRAINT `fk_detallesinpre_pregunta` FOREIGN KEY (`id_pregunta`) REFERENCES `pregunta` (`id_pregunta`),
   ADD CONSTRAINT `fk_detallesinpre_sintoma` FOREIGN KEY (`id_sintoma`) REFERENCES `sintoma` (`id_sintoma`);
+
+--
+-- Filtros para la tabla `diagnostico`
+--
+ALTER TABLE `diagnostico`
+  ADD CONSTRAINT `diagnostico_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
