@@ -100,7 +100,11 @@ public class ActivityMenu extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         if (id == R.id.nav_camera) {
-            fragmentManager.beginTransaction().replace(R.id.contenedor,new HistorialFragment()).commit();
+
+            Intent intencion = new Intent(getApplicationContext(), HistorialActivity.class);
+            startActivity(intencion);
+
+            Toast.makeText(getApplicationContext(), "Historial de Diagnosticos", Toast.LENGTH_SHORT).show();
         } else if (id == R.id.nav_gallery) {
 
             Intent intencion = new Intent(getApplicationContext(), DiagnosticoActivity.class);

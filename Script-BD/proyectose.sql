@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-12-2018 a las 04:37:17
+-- Tiempo de generación: 13-12-2018 a las 04:21:33
 -- Versión del servidor: 10.1.37-MariaDB
 -- Versión de PHP: 7.2.12
 
@@ -137,6 +137,27 @@ CREATE TABLE `diagnostico` (
   `dia_enfermedad` varchar(50) NOT NULL,
   `id_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `diagnosticofinal`
+--
+
+CREATE TABLE `diagnosticofinal` (
+  `id_diagnosticofinal` int(11) NOT NULL,
+  `dif_nombre` varchar(50) NOT NULL,
+  `dif_enfermedad` varchar(50) NOT NULL,
+  `dif_porcentaje` double NOT NULL,
+  `dif_fecha` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `diagnosticofinal`
+--
+
+INSERT INTO `diagnosticofinal` (`id_diagnosticofinal`, `dif_nombre`, `dif_enfermedad`, `dif_porcentaje`, `dif_fecha`) VALUES
+(8, 'Alejandro', 'ASTIGMATISMO', 3, '2018-12-12');
 
 -- --------------------------------------------------------
 
@@ -337,6 +358,12 @@ ALTER TABLE `diagnostico`
   ADD KEY `id_usuario` (`id_usuario`);
 
 --
+-- Indices de la tabla `diagnosticofinal`
+--
+ALTER TABLE `diagnosticofinal`
+  ADD PRIMARY KEY (`id_diagnosticofinal`);
+
+--
 -- Indices de la tabla `enfermedad`
 --
 ALTER TABLE `enfermedad`
@@ -408,7 +435,13 @@ ALTER TABLE `detallesinpre`
 -- AUTO_INCREMENT de la tabla `diagnostico`
 --
 ALTER TABLE `diagnostico`
-  MODIFY `id_diagnostico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `id_diagnostico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
+
+--
+-- AUTO_INCREMENT de la tabla `diagnosticofinal`
+--
+ALTER TABLE `diagnosticofinal`
+  MODIFY `id_diagnosticofinal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `enfermedad`
@@ -432,7 +465,7 @@ ALTER TABLE `pregunta`
 -- AUTO_INCREMENT de la tabla `puntaje`
 --
 ALTER TABLE `puntaje`
-  MODIFY `id_puntaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id_puntaje` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT de la tabla `sintoma`
@@ -444,7 +477,7 @@ ALTER TABLE `sintoma`
 -- AUTO_INCREMENT de la tabla `temporal`
 --
 ALTER TABLE `temporal`
-  MODIFY `id_temporal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_temporal` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

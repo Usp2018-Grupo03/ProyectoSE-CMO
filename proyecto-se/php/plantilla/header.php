@@ -104,7 +104,7 @@
                     <a class="waves-effect parent-item js__control" href="#"><i class="menu-icon fa fa-bar-chart"></i><span>Reportes</span></a>
                     <ul class="sub-menu js__content">
                         
-						<!-- <li><a href="reporte_enfermedades.php">Persona</a></li> -->
+						<li><a href="reporte_diagnostico.php">Diagnosticos</a></li>
 
                     </ul>
                 </li>

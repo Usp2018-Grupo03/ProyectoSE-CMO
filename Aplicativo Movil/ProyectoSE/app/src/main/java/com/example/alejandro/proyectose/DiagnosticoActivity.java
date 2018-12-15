@@ -23,15 +23,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DiagnosticoActivity extends AppCompatActivity {
 
     RequestQueue mREQUESTQUEUEENFERMEDAD;
     RequestQueue mREQUESTQUEUESINTOMA;
     RequestQueue mREQUESTQUEUETEMPORAL;
-    RequestQueue mREQUESTQUEUESUMA;
-    RequestQueue mREQUESTQUEUEPUNTAJES;
     RequestQueue mREQUESTQUEUEBORRAR;
     RequestQueue mREQUESTQUEUEGUARDARPUNTAJE;
     JsonRequest jrq;
@@ -52,10 +53,8 @@ public class DiagnosticoActivity extends AppCompatActivity {
         mREQUESTQUEUEENFERMEDAD = Volley.newRequestQueue(this);
         mREQUESTQUEUESINTOMA = Volley.newRequestQueue(this);
         mREQUESTQUEUETEMPORAL = Volley.newRequestQueue(this);
-        mREQUESTQUEUESUMA = Volley.newRequestQueue(this);
         mREQUESTQUEUEBORRAR = Volley.newRequestQueue(this);
         mREQUESTQUEUEGUARDARPUNTAJE = Volley.newRequestQueue(this);
-        mREQUESTQUEUEPUNTAJES = Volley.newRequestQueue(this);
 
         alistPREGUNTA = new ArrayList<ClassPregunta>();
         rvLISTARPREGUNTA = (RecyclerView) findViewById(R.id.rvListarPregunta);
@@ -69,7 +68,8 @@ public class DiagnosticoActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 PROCESAR();
-                Intent intencion = new Intent(getApplicationContext(), ResultadoActivity.class);
+
+                Intent intencion = new Intent(getApplicationContext(), SumaActivity.class);
                 startActivity(intencion);
             }
         });

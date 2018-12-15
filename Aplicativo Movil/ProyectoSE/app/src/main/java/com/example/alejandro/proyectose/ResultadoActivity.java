@@ -21,23 +21,23 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ResultadoActivity extends AppCompatActivity {
 
-    RequestQueue mREQUESTQUEUEENFERMEDAD;
-    RequestQueue mREQUESTQUEUESINTOMA;
-    RequestQueue mREQUESTQUEUETEMPORAL;
-    RequestQueue mREQUESTQUEUESUMA;
-    RequestQueue mREQUESTQUEUEPUNTAJES;
     RequestQueue mREQUESTQUEUEBORRAR;
-    RequestQueue mREQUESTQUEUEGUARDARPUNTAJE;
+    RequestQueue mREQUESTQUEUEDIAGNOSTICO;
+    RequestQueue mREQUESTQUEUEGUARDARDIAGNOSTICOS;
     JsonRequest jrq;
 
     TextView txtUsuario;
     TextView txtEnfermedad;
     TextView txtPorcentaje;
+    TextView txtFecha;
     Button btnProcesar;
     Button btnReiniciar;
 
@@ -48,29 +48,33 @@ public class ResultadoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultado);
 
-        mREQUESTQUEUEENFERMEDAD = Volley.newRequestQueue(this);
-        mREQUESTQUEUESINTOMA = Volley.newRequestQueue(this);
-        mREQUESTQUEUETEMPORAL = Volley.newRequestQueue(this);
-        mREQUESTQUEUESUMA = Volley.newRequestQueue(this);
         mREQUESTQUEUEBORRAR = Volley.newRequestQueue(this);
-        mREQUESTQUEUEGUARDARPUNTAJE = Volley.newRequestQueue(this);
-        mREQUESTQUEUEPUNTAJES = Volley.newRequestQueue(this);
+        mREQUESTQUEUEDIAGNOSTICO = Volley.newRequestQueue(this);
+        mREQUESTQUEUEGUARDARDIAGNOSTICOS = Volley.newRequestQueue(this);
 
         txtUsuario = (TextView) findViewById(R.id.txtUsuario);
         txtEnfermedad = (TextView) findViewById(R.id.txtEnfermedad);
         txtPorcentaje = (TextView) findViewById(R.id.txtPorcentaje);
+        txtFecha = (TextView) findViewById(R.id.txtFecha);
         btnProcesar = (Button) findViewById(R.id.btnProcesar);
         btnReiniciar = (Button) findViewById(R.id.btnReiniciar);
 
-        SUMA();
+        MOSTRAR();
+
+        MOSTRAR();
+
         MOSTRAR();
 
         btnProcesar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                SUMA();
-                MOSTRAR();
+                GUARDAR();
+
+                LIMPIAR();
+
+                Intent intencion = new Intent(getApplicationContext(), ActivityMenu.class);
+                startActivity(intencion);
             }
         });
 
@@ -86,102 +90,16 @@ public class ResultadoActivity extends AppCompatActivity {
         });
     }
 
-    private void SUMA(){
+    private String Fecha(){
 
-        /* -------------------------------------------------- Suma ---------------------------------------------------- */
+        String fecha = "";
 
-        String URL = "http://"+ g.DIRECCION +"/proyectose-php/listarenfermedad.php";
+        Date hoy = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        fecha = dateFormat.format(hoy);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null,
-                new Response.Listener<JSONObject>(){
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            JSONArray jsonArray = response.getJSONArray("enfermedad");
-
-                            Log.d("asd", "Listando Enfermedades");
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                final JSONObject enfermedad = jsonArray.getJSONObject(i);
-
-                                final String id_enfermedad = enfermedad.getString("id_enfermedad");
-                                final String enf_nombre = enfermedad.getString("enf_nombre");
-
-                                /* -------------------------------------------------- Puntajes ---------------------------------------------------- */
-
-                                String URL = "http://"+ g.DIRECCION +"/proyectose-php/listarpuntaje.php?enf_nombre="+ enf_nombre +"";
-
-                                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null,
-                                        new Response.Listener<JSONObject>(){
-                                            @Override
-                                            public void onResponse(JSONObject response) {
-                                                try {
-                                                    JSONArray jsonArray = response.getJSONArray("puntaje");
-
-                                                    Log.d("asd", "Listando Enfermedades");
-
-                                                    double parcial = 0;
-                                                    double subtotal = 0;
-
-                                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                                        JSONObject puntaje = jsonArray.getJSONObject(i);
-
-                                                        String pun_valor = puntaje.getString("pun_valor");
-
-                                                        parcial = parcial + Double.parseDouble(pun_valor);
-                                                    }
-
-                                                    String url = "http://"+ g.DIRECCION +"/proyectose-php/reg_diagnostico.php?dia_porcentaje="+ parcial +"&id_usuario=1&id_enfermedad="+ enf_nombre +"";
-
-                                                    jrq = new JsonObjectRequest(Request.Method.GET, url, null,
-                                                            new Response.Listener<JSONObject>(){
-                                                                @Override
-                                                                public void onResponse(JSONObject response) {
-
-                                                                }
-                                                            }, new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                            error.printStackTrace();
-                                                        }
-                                                    });
-                                                    mREQUESTQUEUEGUARDARPUNTAJE.add(jrq);
-
-                                                    Log.d("asd", "Fin Enfermedades");
-
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        }, new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        error.printStackTrace();
-                                    }
-                                });
-
-                                mREQUESTQUEUEPUNTAJES.add(request);
-
-                                /* ----------------------------------------------------------------------------------------------------------- */
-                            }
-
-                            Log.d("asd", "Fin Enfermedades");
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-
-        mREQUESTQUEUESUMA.add(request);
-
-        /* ----------------------------------------------------------------------------------------------------------- */
-    };
+        return fecha;
+    }
 
     private void MOSTRAR(){
 
@@ -215,9 +133,10 @@ public class ResultadoActivity extends AppCompatActivity {
                                 }
                             }
 
+                            txtFecha.setText(Fecha());
                             txtUsuario.setText(usuario);
                             txtEnfermedad.setText(enfermedad);
-                            txtPorcentaje.setText(String.valueOf(porcentaje));
+                            txtPorcentaje.setText(String.valueOf(porcentaje) + " %");
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -230,7 +149,7 @@ public class ResultadoActivity extends AppCompatActivity {
             }
         });
 
-        mREQUESTQUEUEENFERMEDAD.add(request);
+        mREQUESTQUEUEDIAGNOSTICO.add(request);
     }
 
     private void LIMPIAR(){
@@ -251,5 +170,29 @@ public class ResultadoActivity extends AppCompatActivity {
         });
 
         mREQUESTQUEUEBORRAR.add(request);
+    }
+
+    private void GUARDAR(){
+
+        String url = "http://"+ g.DIRECCION +"/proyectose-php/reg_diagnosticos.php" +
+                "?dif_nombre="+ txtUsuario.getText() +"" +
+                "&dif_enfermedad="+ txtEnfermedad.getText() +"" +
+                "&dif_porcentaje="+ txtPorcentaje.getText() +"" +
+                "&dif_fecha="+ Fecha() +"";
+
+        jrq = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>(){
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mREQUESTQUEUEGUARDARDIAGNOSTICOS.add(jrq);
     }
 }

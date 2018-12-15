@@ -7,6 +7,10 @@
 	<!--
 	================================================== -->
 	<!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
 	<script src="assets/scripts/jquery.min.js"></script>
 	<script src="assets/scripts/modernizr.min.js"></script>
 	<script src="assets/plugin/bootstrap/js/bootstrap.min.js"></script>
